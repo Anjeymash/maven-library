@@ -90,7 +90,7 @@
 		<constructor-arg ref="connectionPool"></constructor-arg>
 	</bean>
 
-	<bean id="testUserService" class="test/java/by.htp.library.service.impl.TestUserServiceImpl">
+	<bean id="testUserService" class="by.htp.library.service.impl.TestUserServiceImpl">
 		<constructor-arg ref="userService"></constructor-arg>
 	</bean>
 -->

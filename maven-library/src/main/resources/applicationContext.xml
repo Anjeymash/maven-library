@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<!--FABRIC -->
+
+	<bean id="userService" class="by.htp.library.service.impl.UserServiceImpl">
+		<constructor-arg ref="userDAO" />
+	</bean>
+
+	<bean id="userDAO" class="by.htp.library.dao.impl.UserDAOImpl">
+		<constructor-arg ref="connectionPool" />
+	</bean>
+
+	<bean id="bookService" class="by.htp.library.service.impl.BookServiceImpl">
+		<constructor-arg ref="bookDAO" />
+	</bean>
+
+	<bean id="bookDAO" class="by.htp.library.dao.impl.BookDAOImpl">
+		<constructor-arg ref="connectionPool" />
+	</bean>
+
+	<!--COMMANDS -->
+
+
+	<bean id="signIn" class="by.htp.library.controller.command.impl.SignIn">
+		<constructor-arg ref="userService"></constructor-arg>
+	</bean>
+
+	<bean id="signUp" class="by.htp.library.controller.command.impl.SignUp">
+		<constructor-arg ref="userService"></constructor-arg>
+	</bean>
+
+	<bean id="addEditBook" class="by.htp.library.controller.command.impl.AddEditBook">
+		<constructor-arg ref="bookService"></constructor-arg>
+	</bean>
+
+	<bean id="addNewBook" class="by.htp.library.controller.command.impl.AddNewBook">
+		<constructor-arg ref="bookService"></constructor-arg>
+	</bean>
+
+	<bean id="wrongRequest" class="by.htp.library.controller.command.impl.WrongRequest">
+
+	</bean>
+
+	<bean id="getBookList" class="by.htp.library.controller.command.impl.GetBookList">
+		<constructor-arg ref="bookService"></constructor-arg>
+	</bean>
+
+	<!--CONNECTION -->
+
+	<bean id="connectionPool" class="by.htp.library.dao.connection.ConnectionPool">
+	</bean>
+
+	<!--CONTROLLER -->
+
+	<bean id="controller" class="by.htp.library.controller.Controller">
+		<constructor-arg ref="provider" />
+	</bean>
+
+	<!--COMMANDS PROVIDER -->
+
+	<bean id="myRepository" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="by.htp.library.controller.command.CommandName"
+				value-type="by.htp.library.controller.command.Command">
+				<entry key="SIGN_IN" value-ref="signIn" />
+				<entry key="SIGN_UP" value-ref="signUp" />
+				<entry key="ADD_EDIT_BOOK" value-ref="addEditBook" />
+				<entry key="ADD_NEW_BOOK" value-ref="addNewBook" />
+				<entry key="WRONG_REQUEST" value-ref="wrongRequest" />
+				<entry key="GET_BOOKLIST" value-ref="getBookList" />
+
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="provider" class="by.htp.library.controller.command.CommandProvider">
+		<constructor-arg ref="myRepository"></constructor-arg>
+	</bean>
+
+	<!--TESTS -->
+	
+	<bean id="testBookService" class="by.htp.library.service.impl.TestBookServiceImpl">
+		<constructor-arg ref="bookService"></constructor-arg>
+		<constructor-arg ref="connectionPool"></constructor-arg>
+	</bean>
+
+	<bean id="testUserService" class="by.htp.library.service.impl.TestUserServiceImpl">
+		<constructor-arg ref="userService"></constructor-arg>
+	</bean>
+
+</beans>

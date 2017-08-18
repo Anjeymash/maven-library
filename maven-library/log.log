@@ -1,0 +1,8 @@
+17:05:41.828 [main] ERROR  - fail in UserServiceImpl
+00:01:33.130 [main] ERROR  - Wrong request
+java.lang.IllegalArgumentException: No enum constant by.htp.library.controller.command.CommandName.REMOVE_BOOK
+	at java.lang.Enum.valueOf(Unknown Source) ~[?:1.8.0_141]
+	at by.htp.library.controller.command.CommandName.valueOf(CommandName.java:1) ~[classes/:?]
+	at by.htp.library.controller.command.CommandProvider.getCommand(CommandProvider.java:25) [classes/:?]
+	at by.htp.library.controller.Controller.executeAction(Controller.java:22) [classes/:?]
+	at by.htp.library.view.View.main(View.java:43) [classes/:?]
